@@ -19,8 +19,21 @@
   </view>
   <form bindsubmit='formSubmit' bindreset='formReset'>
     <view class='view-form'>
-      
-      
+      <view class='photo-area' wx:if='{{showLicence}}'>
+        <view class='photo-choose'>
+          <image mode="aspectFit" src="{{licence_img}}" bindtap='chooseLicence'></image>
+        </view>
+      </view>
+      <view class='choose-area' id='kaihu' wx:if='{{!showLicence}}' bindtap='chooseCredentials'>
+        <view class='fa fa-plus'></view>
+        <text>上传开户许可证</text>
+        <image mode='aspectFill' src='{{kaihu_img}}' wx:if='{{kaihu_img!=""}}'></image>
+      </view>
+      <view class='choose-area' id='jinying' wx:if='{{!showLicence}}' bindtap='chooseCredentials'>
+        <view class='fa fa-plus'></view>
+        <text>上传经营许可证</text>
+        <image mode='aspectFill' src='{{jinying_img}}' wx:if='{{jinying_img!=""}}'></image>
+      </view>
       <view class='form-btn-area'>
         <button class='form-btn' type='primary' formType='submit'>下一步</button>
       </view>

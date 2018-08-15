@@ -1,6 +1,54 @@
 /* pages/uploadPic/business/licence.wxss */
-.info-title{
-  text-align: center;
+.photo-area{
   width: 100%;
-  height: 90rpx;
+  height: 830rpx;
+  position: relative;
+}
+.photo-area .photo-choose{
+  width: 100%;
+  height: 100%;
+  background: #c3c1c1;
+  box-sizing: border-box;
+}
+.photo-area .photo-choose image{
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+.choose-area{
+  width: 600rpx;
+  height: 400rpx;
+  background: #cecdcd;
+  text-align: center;
+  margin: 40rpx auto;
+  position: relative;
+}
+.choose-area .fa{
+  font-size: 120rpx;
+  height: 120rpx;
+  width: 120rpx;
+  color: #fff;
+  margin: 140rpx auto 0 auto;
+  position: relative;
+  z-index:1;
+}
+.choose-area text{
+  width: 200rpx;
+  height: 40rpx;
+  font-size: 28rpx;
+  color: #8A8787;
+  display: block;
+  margin: auto;
+  position: relative;
+  z-index:1;
+}
+.choose-area image{
+  position: absolute;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
 }

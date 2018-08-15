@@ -6,7 +6,8 @@
     "pages/information/info",
     "pages/information/company/info",
     "pages/uploadPic/idCard",
-    "pages/uploadPic/business/licence"
+    "pages/uploadPic/business/licence",
+    "pages/uploadPic/infoConfirm/personInfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -62,9 +62,17 @@ Page({
         that.setData({
           idcard_img: that.data.idcard_face
         })
+      }else{
+        wx.showModal({
+          title: '友情提示',
+          content: '请先上传身份证',
+          showCancel:false
+        })
       }
     }else{
       //上传
+      
+      //解析
       
       wx.redirectTo({
         url: '../uploadPic/business/licence',

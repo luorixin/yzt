@@ -1,9 +1,4 @@
 /* pages/uploadPic/idCard.wxss */
-.info-title{
-  text-align: center;
-  width: 100%;
-  height: 90rpx;
-}
 .photo-area{
   width: 100%;
   height: 830rpx;

@@ -1,0 +1,44 @@
+<!--pages/uploadPic/infoConfirm/personInfo.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='view-container'>
+  <view class='view-progress'>
+    <view class='view-progress-inner'>
+      <view class='view-progress-inner-step active'>
+        <label>填写信息</label>
+      </view>
+      <view class='view-progress-inner-step active'>
+        <label>上传资料</label>
+      </view>
+      <view class='view-progress-inner-step'>
+        <label>身份核对</label>
+      </view>
+      <view class='view-progress-inner-step'>
+        <label>提交审核</label>
+      </view>
+    </view>
+  </view>
+  <form bindsubmit='formSubmit' bindreset='formReset'>
+    <view class='view-form'>
+      <view class='view-form-label'>请核对以下信息是否正确</view>
+      <view class='view-form-cell'>
+        <text class='form-key'>申请人姓名</text>
+        <input bindinput="bindEmptyInput" name="name" value='{{name}}' maxlength="100" placeholder="请输入名称" />
+      </view>
+      <view class='view-form-cell'>
+        <text class='form-key'>申请人身份证号</text>
+        <input bindinput="bindEmptyInput" name="idCard" value='{{idCard}}' type='number' placeholder="请输入身份证号码" />
+      </view>
+      <view class='view-form-cell'>
+        <text class='form-key'>企业名称</text>
+        <input bindinput="bindEmptyInput" name="companyName" value='{{companyName}}' placeholder="请输入企业名称" />
+      </view>
+      <view class='view-form-cell'>
+        <text class='form-key'>统一社会信用代码</text>
+        <input bindinput="bindEmptyInput" name="socialId" value='{{socialId}}' type='number' placeholder="请输入统一社会信用代码" />
+      </view>
+      <view class='form-btn-area'>
+        <button class='form-btn' type='primary' formType='submit'>下一步</button>
+      </view>
+    </view>
+  </form>
+</view>

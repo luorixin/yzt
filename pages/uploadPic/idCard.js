@@ -35,7 +35,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    let that = this;
+    wx.getStorage({
+      key: 'access_token',
+      success: function(res) {
+        that.setData({
+          baidu_ai:{
+            'access_token': res.data,
+            'duetime':that.data.baidu_ai.duetime
+          }
+        })
+      },
+    })
+    wx.getStorage({
+      key: 'duetime',
+      success: function (res) {
+        that.setData({
+          baidu_ai: {
+            'access_token': that.data.baidu_ai.access_token,
+            'duetime': res.data,
+          }
+        })
+      },
+    })
   },
 
   /**
@@ -114,49 +136,103 @@ Page({
                 'duetime': duetime
               }
             })
-            that._ocr();
+            wx.setStorage({
+              key: 'access_token',
+              data: res.data.access_token,
+            })
+            wx.setStorage({
+              key: 'duetime',
+              data: duetime,
+            })
+            that._getImgSize(that.data.idcard_back)
+              .then((res) => {
+                console.log(res)
+                return that._base64convert(res);
+              })
+              .then((res) => {
+                return that._ocr(res)
+              })
+              .then((res) => {
+                return that._getImgSize(that.data.idcard_face)
+              })
+              .then((res) => {
+                console.log(res)
+                return that._base64convert(res);
+              })
+              .then((res) => {
+                return that._ocr(res)
+              })
+              .then((res) => {
+                wx.redirectTo({
+                  url: '../uploadPic/business/licence',
+                })
+              })
           }
         })
       }else{
-        that._ocr();
+        // let ocr_back = new _Promise((resolve,reject)=>{
+        //   that._ocr(that.data.idcard_back, resolve, reject);
+        // })
+        // let ocr_face = new _Promise((resolve, reject) => {
+        //   that._ocr(that.data.idcard_face, resolve, reject);
+        // })
+        // _Promise.all([ocr_back,ocr_face]).then(function(res){
+        //   console.log(res);
+        // })
+        that._getImgSize(that.data.idcard_back)
+          .then((res) => {
+            console.log(res)
+            return that._base64convert(res);
+          })
+          .then((res) => {
+            console.log(res)
+            return that._ocr(res)
+          })
+          .then((res) => {
+            return that._getImgSize(that.data.idcard_face)
+          })
+          .then((res) => {
+            return that._base64convert(res);
+          })
+          .then((res) => {
+            return that._ocr(res)
+          })
+          .then((res) => {
+            wx.redirectTo({
+              url: '../uploadPic/business/licence',
+            })
+          })
       }
      
     }
 
   },
   //OCR识别
-  _ocr:function(){
+  _ocr: function (base64Img){
     let that = this;
-    //识别背面
-    that._getImgSize(that.data.idcard_back)
-        .then((res) =>{
+    //识别
+    return new _Promise((resolve, reject) => {
+      console.log("token: " + that.data.baidu_ai.access_token);
+      wx.request({
+        url: OCR_API + "?access_token=" + that.data.baidu_ai.access_token,
+        data: {
+          image: base64Img,
+          language_type: 'CHN_ENG'
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        method: 'POST',
+        success: function (res) {
+          console.log(res);
+          resolve(res);
+        },
+        fail: function (res) {
           console.log(res)
-          return that._base64convert(res);
-        })
-        .then((res) => {
-          console.log("token: "+that.data.baidu_ai.access_token);
-          wx.request({
-            url: OCR_API + "?access_token=" + that.data.baidu_ai.access_token,
-            data: {
-              image: res,
-              language_type:'CHN_ENG'
-            },
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            method:'POST',
-            success: function (res) {
-              console.log(res);
-            },
-            fail:function(res){
-              console.log(res)
-            }
-          })
-        })
-
-    // wx.redirectTo({
-    //   url: '../uploadPic/business/licence',
-    // })
+          reject(res)
+        }
+      })
+    })   
   },
   //获取图片尺寸
   _getImgSize: function (imgPath){
@@ -197,7 +273,7 @@ Page({
             // 4. base64编码
             let base64 = wx.arrayBufferToBase64(pngData)
             // ...
-            console.log("base64")
+            console.log(base64)
             resolve(base64);
           }
         })

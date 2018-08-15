@@ -31,3 +31,6 @@
   height: 150rpx;
   margin-top: 20rpx;
 }
+canvas{
+  display: none;
+}

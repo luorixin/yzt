@@ -1,0 +1,6 @@
+/* pages/uploadPic/business/licence.wxss */
+.info-title{
+  text-align: center;
+  width: 100%;
+  height: 90rpx;
+}

@@ -1,0 +1,36 @@
+<view class="login-container">
+  <view class='logo'>
+    <view class='logo-main'>医贷通</view>
+    <view class='logo-sub'>医伴金服</view>
+    <view class='slogen'>
+      <label>您的购贷账款医伴来垫</label>
+      <label>最高额度100万</label>
+      <label>无抵押 无担保</label>
+    </view>
+  </view>
+ <form bindsubmit='formSubmit' bindreset='formReset'>
+  <view class='login-form'>
+    <view class='login-cell'>
+      <input class="login-input" placeholder="手机号" type="number" maxlength="11" value="{{phone}}" focus="true" name="phone"/>
+    </view>
+    <view wx:if='{{showRegister}}' class='login-cell'>
+      <input class="login-input login-part"  placeholder="验证码" type="number" maxlength="4" value="{{code}}" name="code"/>
+      <button class='login-btn'>获取验证码</button>
+    </view>
+    <view class='login-cell'>
+      <input class="login-input" placeholder="输入密码" type="password" value="{{password}}" name="password"/>
+    </view>
+    <view wx:if='{{showRegister}}' class='login-cell'>
+      <input class="login-input" placeholder="再次密码" type="password" value="{{subPassword}}" name="subPassword"/>
+    </view>
+    <view class='login-btn-area'>
+      <button wx:if="{{!showRegister}}" class='login-btn' type='primary' formType='submit'>登录</button>
+      <button wx:if="{{showRegister}}" class='login-btn' type='primary' formType='submit'>注册</button>
+    </view>
+    <view class='login-change'>
+      <label  wx:if="{{!showRegister}}" >没有账号? <span class='login-href' bindtap='changeToRegister'>注册</span></label>
+      <label  wx:if="{{showRegister}}" >已有账号? <span class='login-href' bindtap='changeToLogin'>登录</span></label>
+    </view>
+  </view>
+ </form>
+</view>

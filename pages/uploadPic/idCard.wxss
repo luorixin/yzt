@@ -1,0 +1,38 @@
+/* pages/uploadPic/idCard.wxss */
+.info-title{
+  text-align: center;
+  width: 100%;
+  height: 90rpx;
+}
+.photo-area{
+  width: 100%;
+  height: 830rpx;
+  position: relative
+}
+.photo-area .photo-choose{
+  width: 100%;
+  height: 600rpx;
+  background: #dfdfdf;
+  padding: 60rpx;
+  box-sizing: border-box;
+}
+.photo-area .photo-choose image{
+  position: relative;
+  margin: auto;
+  width: 640rpx;
+  height: 480rpx;
+}
+.photo-area .photo-tip{
+  width: 100%;
+  height: 290rpx;
+  font-size: 28rpx;
+  color: #666;
+  background: #fff;
+  padding: 20rpx 40rpx;
+  box-sizing: border-box;
+}
+.photo-area .photo-tip image{
+  width: 670rpx;
+  height: 150rpx;
+  margin-top: 20rpx;
+}

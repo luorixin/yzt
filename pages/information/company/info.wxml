@@ -1,0 +1,77 @@
+<!--pages/information/company/info.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='view-container'>
+  <view class='view-progress'>
+    <view class='view-progress-inner'>
+      <view class='view-progress-inner-step active'>
+        <label>填写信息</label>
+      </view>
+      <view class='view-progress-inner-step'>
+        <label>上传资料</label>
+      </view>
+      <view class='view-progress-inner-step'>
+        <label>身份核对</label>
+      </view>
+      <view class='view-progress-inner-step'>
+        <label>提交审核</label>
+      </view>
+    </view>
+  </view>
+  <form bindsubmit='formSubmit' bindreset='formReset'>
+    <view class='view-form'>
+      <view class='view-form-cell'>
+        <text class='form-key'>企业年销售额</text>
+        <input bindinput="bindEmptyInput" name="sellAmount" class="input" type="number" maxlength="100" />
+        <text class='form-key'>万元</text>
+      </view>
+      <view class='view-form-cell'>
+        <text class='form-key'>企业主营产品</text>
+        <view class='fa fa-plus-circle' bindtap='bindProductAdd'></view>
+      </view>
+      <view class='view-form-cell' wx:for='{{products}}' wx:key="*this"  wx:for-item="product">
+        <input bindinput="bindEmptyInput" name='product' class="input left" placeholder="产品名称" value='{{product.name}}'/>
+        <text class='form-key'>占比</text>
+        <input name='percent' class='input percnet' type="number" value='{{product.percent}}'></input>
+        <text class='form-key'>%</text>
+      </view>
+      <view class='view-form-cell form-address'>
+        <text class='form-key'>企业经营地址</text>
+        <view class="section">
+          <picker bindchange="bindRegionChange" mode = "region" value="{{region}}">
+            <view class="tui-picker-detail">{{region[0]}} - {{region[1]}} - {{region[2]}}</view>
+          </picker>
+        </view>
+      </view>
+      <view class='view-form-cell form-address-detail'>
+        <input bindinput='bindKeyInput' maxlength='200' name='addressDetail' placeholder="详细地址"></input>
+      </view>
+      <view class='view-form-cell'>
+        <text class='form-key'>
+        企业前3大销售客户<text class='form-key grey t-l'>（须为医院或大型商业平台）</text>
+        </text>
+        
+      </view>
+      <view class='view-form-cell'>
+        <input bindinput="bindPhoneInput" name='sellCompanyName1' class="input left" placeholder="与开票信息一致的企业全称" />
+        <text class='form-key'>账期</text>
+        <input name='sellDueDate1' class='input percnet' type="number"></input>
+        <text class='form-key'>月</text>
+      </view>
+      <view class='view-form-cell'>
+        <input bindinput="bindPhoneInput" name='sellCompanyName2' class="input left" placeholder="与开票信息一致的企业全称" />
+        <text class='form-key'>账期</text>
+        <input name='sellDueDate2' class='input percnet' type="number"></input>
+        <text class='form-key'>月</text>
+      </view>
+      <view class='view-form-cell'>
+        <input bindinput="bindPhoneInput" name='sellCompanyName3' class="input left" placeholder="与开票信息一致的企业全称" />
+        <text class='form-key'>账期</text>
+        <input name='sellDueDate3' class='input percnet' type="number"></input>
+        <text class='form-key'>月</text>
+      </view>
+      <view class='form-btn-area'>
+        <button class='form-btn' type='primary' formType='submit'>下一步</button>
+      </view>
+    </view>
+  </form>
+</view>

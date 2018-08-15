@@ -1,0 +1,73 @@
+/* pages/information/info.wxss */
+.info-title{
+  text-align: center;
+  width: 100%;
+  height: 90rpx;
+}
+.view-container{
+  margin-top: 140rpx;
+}
+.request-info{
+  width: 100%;
+  height: 450rpx;
+  background: #eec975;
+  color: #fff;
+  text-align: center;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+.request-info .request-title{
+  font-size: 28rpx;
+  color: #fff;
+  line-height: 40rpx;
+}
+.request-info .request-content{
+  font-size: 56rpx;
+  line-height: 80rpx;
+  margin-top: 20rpx;
+}
+.request-info .request-end label{
+  background: #e17777;
+  display: block;
+  font-size: 26rpx;
+  text-align: center;
+  border-radius: 34rpx;
+  line-height: 70rpx;
+  height: 70rpx;
+  width: 540rpx;
+  margin:20rpx auto 0 auto;
+}
+.request-table{
+  width: 660rpx;
+  height: 200rpx;
+  background: #fff;
+  border: 2rpx solid #dfdfdf;
+  border-radius: 8rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80rpx;
+}
+.request-table .request-td{
+  width: 33.33%;
+  justify-content: center;
+  text-align: center;
+  border-right: 1px solid #dfdfdf;
+}
+.request-table .request-td:last-child{
+  border-right: 0;
+}
+.request-td label{
+  color: #333;
+  font-size: 28rpx;
+  display: block;
+}
+.request-td text{
+  color: #e17777;
+  font-size: 56rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-weight: bold;
+}
+
+

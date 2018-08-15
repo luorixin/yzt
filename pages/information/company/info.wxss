@@ -1,0 +1,8 @@
+/* pages/information/company/info.wxss */
+/* pages/information/info.wxss */
+.info-title{
+  text-align: center;
+  width: 100%;
+  height: 90rpx;
+}
+

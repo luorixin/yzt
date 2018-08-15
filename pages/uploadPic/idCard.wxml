@@ -1,0 +1,37 @@
+<!--pages/uploadPic/idCard.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='view-container'>
+  <view class='view-progress'>
+    <view class='view-progress-inner'>
+      <view class='view-progress-inner-step active'>
+        <label>填写信息</label>
+      </view>
+      <view class='view-progress-inner-step active'>
+        <label>上传资料</label>
+      </view>
+      <view class='view-progress-inner-step'>
+        <label>身份核对</label>
+      </view>
+      <view class='view-progress-inner-step'>
+        <label>提交审核</label>
+      </view>
+    </view>
+  </view>
+  <form bindsubmit='formSubmit' bindreset='formReset'>
+    <view class='view-form'>
+      <view class='photo-area'>
+        <view class='photo-choose'>
+          <image mode="aspectFill" src="{{idcard_img}}" bindtap='chooseIdCard'></image>
+        </view>
+        <view class='photo-tip'>
+          <text>身份证拍照示例</text>
+          <image mode='aspectFill' src='{{idcard_tip}}'></image>
+        </view>
+      </view>
+      
+      <view class='form-btn-area'>
+        <button class='form-btn' type='primary' formType='submit'>下一步</button>
+      </view>
+    </view>
+  </form>
+</view>

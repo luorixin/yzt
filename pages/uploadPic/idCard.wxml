@@ -21,6 +21,7 @@
     <view class='view-form'>
       <view class='photo-area'>
         <view class='photo-choose'>
+        <canvas class='canvas' id='scannerCanvas' canvas-id='scannerCanvas' disable-scroll="true" />
           <image mode="aspectFill" src="{{idcard_img}}" bindtap='chooseIdCard'></image>
         </view>
         <view class='photo-tip'>

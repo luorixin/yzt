@@ -1,4 +1,20 @@
 // pages/uploadPic/idCard.js
+import { Promise } from '../../utils/util';
+import _Promise from '../../utils/promise.js';
+import upng from '../../helpers/upng-js/UPNG.js'
+
+const App = getApp()
+
+const APP_ID = "11679748";
+const API_KEY = "3dKHWG2RFSXFxFtptZnABI65";
+const SECRET_KEY = "9m0YAjjAzn7jAPzXasPbQmLnE6SROKBk";
+
+const TOKEN_API = 'https://aip.baidubce.com/oauth/2.0/token'
+const IDCARD_API = 'https://aip.baidubce.com/rest/2.0/ocr/v1/idcard'
+const OCR_API = 'https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic'
+
+const canvasID = 'scannerCanvas'
+
 Page({
 
   /**
@@ -8,14 +24,18 @@ Page({
     idcard_back:'../../src/image/idcard_back.png',
     idcard_tip: '../../src/image/idcard_tip.png',
     idcard_face:'../../src/image/idcard_face.png',
-    idcard_img:'../../src/image/idcard_back.png'
+    idcard_img:'../../src/image/idcard_back.png',
+    baidu_ai:{
+      'access_token':'',
+      'duetime':0
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
 
   /**
@@ -73,11 +93,115 @@ Page({
       //上传
       
       //解析
-      
-      wx.redirectTo({
-        url: '../uploadPic/business/licence',
-      })
+      //获取token
+      let nowtime = new Date().getTime();
+      if (that.data.baidu_ai.duetime < nowtime){
+        wx.request({
+          url: TOKEN_API,
+          data:{
+            grant_type:'client_credentials',
+            client_id: API_KEY,
+            client_secret:SECRET_KEY
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function (res) {
+            let duetime = new Date().getTime()+res.data.expires_in;
+            that.setData({
+              baidu_ai: {
+                'access_token': res.data.access_token,
+                'duetime': duetime
+              }
+            })
+            that._ocr();
+          }
+        })
+      }else{
+        that._ocr();
+      }
+     
     }
 
   },
+  //OCR识别
+  _ocr:function(){
+    let that = this;
+    //识别背面
+    that._getImgSize(that.data.idcard_back)
+        .then((res) =>{
+          console.log(res)
+          return that._base64convert(res);
+        })
+        .then((res) => {
+          console.log("token: "+that.data.baidu_ai.access_token);
+          wx.request({
+            url: OCR_API + "?access_token=" + that.data.baidu_ai.access_token,
+            data: {
+              image: res,
+              language_type:'CHN_ENG'
+            },
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            method:'POST',
+            success: function (res) {
+              console.log(res);
+            },
+            fail:function(res){
+              console.log(res)
+            }
+          })
+        })
+
+    // wx.redirectTo({
+    //   url: '../uploadPic/business/licence',
+    // })
+  },
+  //获取图片尺寸
+  _getImgSize: function (imgPath){
+    let that = this;
+    return new _Promise((resolve,reject)=>{
+      wx.getImageInfo({
+        src: imgPath,
+        success:function(res){
+          let imgWidth = res.width
+          let imgHeight = res.height
+          res.imgPath = imgPath;
+          resolve(res);
+        }
+      })
+    })
+  },
+  //转换base64
+  _base64convert: function(res){
+    let that = this;
+    let { imgPath, width, height} = res;
+    return new _Promise((resolve,reject)=>{
+      let canvas = wx.createCanvasContext(canvasID)
+      // 1. 绘制图片至canvas
+      canvas.drawImage(imgPath, 0, 0, width, height)
+      // 绘制完成后执行回调，API 1.7.0
+      canvas.draw(false, () => {
+        // 2. 获取图像数据， API 1.9.0
+        wx.canvasGetImageData({
+          canvasId: canvasID,
+          x: 0,
+          y: 0,
+          width: width,
+          height: height,
+          success(res) {
+            // 3. png编码
+            console.log(res)
+            let pngData = upng.encode([res.data.buffer], res.width, res.height)
+            // 4. base64编码
+            let base64 = wx.arrayBufferToBase64(pngData)
+            // ...
+            console.log("base64")
+            resolve(base64);
+          }
+        })
+      })
+    })
+  }
 })

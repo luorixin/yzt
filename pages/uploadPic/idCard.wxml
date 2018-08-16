@@ -22,11 +22,11 @@
       <view class='photo-area'>
         <view class='photo-choose'>
         <canvas class='canvas' id='scannerCanvas' canvas-id='scannerCanvas' disable-scroll="true" />
-          <image mode="aspectFill" src="{{idcard_img}}" bindtap='chooseIdCard'></image>
+          <image mode="aspectFit" src="{{idcard_img}}" bindtap='chooseIdCard'></image>
         </view>
         <view class='photo-tip'>
           <text>身份证拍照示例</text>
-          <image mode='aspectFill' src='{{idcard_tip}}'></image>
+          <image mode='aspectFit' src='{{idcard_tip}}'></image>
         </view>
       </view>
       

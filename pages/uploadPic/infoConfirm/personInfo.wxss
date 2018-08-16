@@ -1,1 +1,4 @@
 /* pages/uploadPic/infoConfirm/personInfo.wxss */
+.view-form-cell input{
+  width: 450rpx;
+}

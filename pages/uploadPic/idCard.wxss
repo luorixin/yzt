@@ -2,7 +2,8 @@
 .photo-area{
   width: 100%;
   height: 830rpx;
-  position: relative
+  position: relative;
+  z-index: 1;
 }
 .photo-area .photo-choose{
   width: 100%;
@@ -10,12 +11,15 @@
   background: #dfdfdf;
   padding: 60rpx;
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 .photo-area .photo-choose image{
   position: relative;
   margin: auto;
   width: 640rpx;
   height: 480rpx;
+  z-index: 1;
 }
 .photo-area .photo-tip{
   width: 100%;
@@ -31,6 +35,12 @@
   height: 150rpx;
   margin-top: 20rpx;
 }
-canvas{
-  display: none;
+.photo-area canvas{
+  position: absolute;
+  width:100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0;
 }

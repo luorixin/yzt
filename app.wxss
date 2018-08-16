@@ -142,7 +142,7 @@
 .form-btn-area{
   width: 500rpx;
   height: 70rpx;
-  margin: 40rpx auto;
+  margin: 60rpx auto;
 }
 .form-btn-area .form-btn{
   height: 70rpx;

@@ -20,6 +20,10 @@
   <form bindsubmit='formSubmit' bindreset='formReset'>
     <view class='view-form'>
       <view class='view-form-cell'>
+        <text class='form-key'>待垫付货款企业名称</text>
+        <input name="name" value="{{name}}" class="input" maxlength="100" placeholder="请输入名称" />
+      </view>
+      <view class='view-form-cell'>
         <text class='form-key'>企业年销售额</text>
         <input bindinput="bindEmptyInput" name="sellAmount" class="input" type="number" maxlength="100" />
         <text class='form-key'>万元</text>

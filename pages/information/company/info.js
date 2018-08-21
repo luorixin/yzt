@@ -10,10 +10,24 @@ Page({
    */
   data: {
     region: ['北京市','北京市','东城区'],
+    name: '',
     products: [{
       name: '',
       percent: ''
     }],
+    sales_customer:[{
+      name:'',
+      dueDate:''
+    }],
+    address_detail: '',
+    loanCompany: {
+      items: [],
+      params: {
+        page: 1,
+        limit: 10,
+      },
+      paginate: {}
+    }
   },
 
   /**

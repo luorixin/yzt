@@ -94,6 +94,7 @@ Page({
               hasData: true,
               _id:loanPersonFs._id
             })
+            wx.setStorageSync('loanPersonId', loanPersonFs._id)
           }
         }
       })
@@ -157,6 +158,7 @@ Page({
           .then(data => {
             console.log(data)
             if (data.meta.code == 0) {
+              wx.setStorageSync('loanPersonId', data.data._id)
               wx.showToast({
                 title: data.meta.message,
                 icon: 'success',

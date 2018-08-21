@@ -16,8 +16,16 @@ Page({
     })
   },
   changeToLogin:function(){
+    wx.getStorageSync('token') ? this.goIndex() : this.goLogin()
+  },
+  goLogin:function(){
     wx.navigateTo({
       url: '../login/login',
+    })
+  },
+  goIndex:function(){
+    wx.navigateTo({
+      url: '../information/info',
     })
   },
   onLoad: function () {

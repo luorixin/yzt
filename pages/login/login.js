@@ -11,8 +11,8 @@ Page({
     showRegister:false,
     phone:"",
     password:"",
-    code:""
-
+    code:"",
+    logged: !1
   },
 
   /**
@@ -38,6 +38,13 @@ Page({
         }
       })
   },
+  onShow() {
+    const token = wx.getStorageSync('token')
+    this.setData({
+      logged: !!token
+    })
+    token && setTimeout(this.goIndex, 1500)
+  },
   /**
    * 登录
    */
@@ -47,7 +54,7 @@ Page({
     let password = e.detail.value.password;
     let code = e.detail.value.code;
     let subPassword = e.detail.value.subPassword;
-    if (this.WxValidate.checkForm(e)) {
+    if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]
       wx.showModal({
         title: '友情提示',
@@ -56,10 +63,43 @@ Page({
       })
       return false
     }else{
-      wx.redirectTo({
-        url: '../information/info',
-      })
+      this.sign(phone,password);
+      
     }
+  },
+  sign: function(phone,password){
+    let apiUrl = '/user/sign/in';
+    if (this.data.showRegister) {
+      apiUrl = '/user/sign/up';
+    } 
+    console.log(phone, password,apiUrl)
+    wx.request({
+      url: App.Config.basePath + apiUrl,
+      method: "POST",
+      data: {
+        username: phone,
+        password: password
+      },
+      success: res => {
+        if (res.statusCode === 401) {
+          wx.removeStorageSync('token')
+        }
+        console.log(res)
+        if (res.data.meta.code == 0) {
+          wx.setStorageSync('token', res.data.data.token)
+          wx.setStorageSync('userId', res.data.data.userId)
+          wx.redirectTo({
+            url: '../information/info',
+          })
+        }else{
+          wx.showModal({
+            title: '友情提示',
+            content: `${res.data.meta.message}`,
+            showCancel: !1,
+          })
+        }
+      }
+    })
   },
   /**
    * 切换登录注册

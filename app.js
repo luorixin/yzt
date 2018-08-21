@@ -1,5 +1,8 @@
 //app.js
 import WxValidate from 'helpers/WxValidate'
+import HttpResource from 'helpers/HttpResource.js'
+import Config from 'utils/config.js'
+import Tools from 'helpers/Tools.js'
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -37,5 +40,13 @@ App({
   globalData: {
     userInfo: null
   },
+  renderImage(path) {
+    if (!path) return ''
+    if (path.indexOf('http') !== -1) return path
+    return `${this.Config.fileBasePath}${path}`
+  },
   WxValidate: (rules, messages) => new WxValidate(rules, messages), 
+  HttpResource: (url, paramDefaults, actions, options) => new HttpResource(url, paramDefaults, actions, options).init(), 
+  Tools: new Tools,
+  Config: Config, 
 })

@@ -1,10 +1,6 @@
 // pages/information/info.js
-import { Promise } from '../../utils/util';
 
 var App = getApp()
-
-const API = 'https://restapi.amap.com/v3/config/district?key=0aa165b65eaabe38cc862bb13e50f8e0'
-
 
 Page({
 
@@ -12,16 +8,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    provinceData: [],
-    cityData: [],
-    districtData:[],
-    region: [0, 0 , 0],
-    stockPercent:0,
-    companyName:'',
+    region: ['北京市', '北京市', '东城区'],
+    stock_percent:false,
+    company_name:'',
     name:'',
     code:'',
-    phone:'',
-    addressDetail:''
+    tel:'',
+    address_detail:'',
+    hasData: false,    
+    loanPerson: {
+      items: [],
+      params: {
+        page: 1,
+        limit: 10,
+      },
+      paginate: {}
+    }
   },
 
   /**
@@ -29,98 +31,70 @@ Page({
    */
   onLoad: function (options) {
     const me = this;
-    Promise(wx.request, {
-      url: API,
-      method: 'GET'
-    })
-    .then(res => {
-      if (+res.statusCode == 200) {
-        let provinceList = res.data.districts[0].districts;
-        me.setData({
-          provinceData: provinceList,
-        });
-
-        let firstProvince = provinceList[0];
-        return Promise(wx.request, {
-          url: API + '&keywords=' + firstProvince.name,
-          method: 'GET'
-        })
-      }
-      else {
-        me.setData({ provinceData: [] });
-      }
-    })
-    .catch(err => {
-      console.log(err)
-      me.setData({ provinceData: [] });
-    })
-    .then(res => {
-      if (+res.statusCode == 200) {
-        let cityData = res.data.districts[0].districts;
-        me.setData({
-          cityData: cityData,
-        });
-        let firstCity = cityData[0];
-        return Promise(wx.request, {
-          url: API + '&keywords=' + firstCity.name,
-          method: 'GET'
-        })
-      }
-      else {
-        me.setData({ cityData: [] });
-      }
-    })
-    .catch(err => {
-      console.log(err)
-      me.setData({
-        cityData: []
-      });
-    })
-    .then(res => {
-      if (+res.statusCode == 200) {
-        let districtData = res.data.districts[0].districts;
-        me.setData({
-          districtData: districtData,
-        });
-      }
-      else {
-        me.setData({ districtData: [] });
-      }
-    })
-    .catch(err => {
-      console.log(err)
-      me.setData({
-        districtData: []
-      });
-    })
 
     me.WxValidate = App.WxValidate({
-      phone: {
+      tel: {
         required: true,
         tel: true,
       },
       name: {
         required: true,
       },
-      companyName:{
+      company_name:{
         required: true,
       },
-      addressDetail:{
+      address_detail:{
         required:true
       }
     }, {
-        phone: {
+        tel: {
           required: '请输入11位手机号码',
           tel:'请输入正确的手机号码'
         },
         name: {
           required: '请输入名字',
         },
-        companyName:{
+        company_name:{
           required: '请输入公司名字'
         },
-        addressDetail:{
+        address_detail:{
           required: '请输入详细地址'
+        }
+      })
+
+    me.loanPerson = App.HttpResource('/loanPerson/:id', { id: '@id' })
+    me.initData();
+  },
+  initData:function(){
+    let loanPerson = this.data.loanPerson;
+    let params = loanPerson.params
+    let me = this;
+    this.setData({
+      userId: wx.getStorageSync('userId')
+    })
+    params.userId = this.data.userId
+    this.loanPerson.queryAsync(params)
+      .then(data => {
+        console.log(data)
+        if (data.meta.code == 0) {
+          loanPerson.items = [...loanPerson.items, ...data.data.items]
+          loanPerson.paginate = data.data.paginate
+          loanPerson.params.page = data.data.paginate.next
+          loanPerson.params.limit = data.data.paginate.perPage
+          if(loanPerson.items.length>0){
+            let loanPersonFs = loanPerson.items[0];
+            me.setData({
+              loanPerson: loanPerson,
+              region: [loanPersonFs.address_province, loanPersonFs.address_city, loanPersonFs.address_district],
+              stock_percent: loanPersonFs.stock_percent,
+              company_name: loanPersonFs.company_name,
+              name: loanPersonFs.name,
+              tel: loanPersonFs.tel ? loanPersonFs.tel : "",
+              address_detail: loanPersonFs.address_detail,
+              hasData: true,
+              _id:loanPersonFs._id
+            })
+          }
         }
       })
   },
@@ -128,107 +102,27 @@ Page({
    * switch是否占股40%
    */
   switchStock: function(e){
-
+    this.setData({
+      stockPercent:e.detail.value==='checked' ? 1 : 0
+    })
   },
-  bindProvinceChange: function (e) {
-    let me = this;
-    let val = e.detail.value;
-    let provinceIndex = val[0];
-    let { provinceData ,region} = me.data;
-
-    Promise(wx.request, {
-      url: API + '&keywords=' + provinceData[provinceIndex].name,
-      method: 'GET'
+  bindRegionChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      region: e.detail.value
     })
-    .then(res => {
-      if (+res.statusCode === 200) {
-        region[0] = provinceIndex
-        region[1] = 0
-        region[2] = 0
-        me.setData({
-          cityData: res.data.districts[0].districts,
-          region : region
-        });
-        let firstCity = res.data.districts[0].districts[0];
-        return Promise(wx.request, {
-          url: API + '&keywords=' + firstCity.name,
-          method: 'GET'
-        })
-      }
-      else {
-        me.setData({
-          cityData: []
-        });
-      }
-    })
-    .catch(err => {
-      me.setData({
-        cityData: []
-      });
-    })
-    .then(res => {
-      if (+res.statusCode == 200) {
-        let districtData = res.data.districts[0].districts;
-        me.setData({
-          districtData: districtData,
-        });
-      }
-      else {
-        me.setData({ districtData: [] });
-      }
-    })
-    .catch(err => {
-      me.setData({
-        districtData: []
-      });
-    });
-  },
-  bindCityChange: function (e) {
-    let me = this;
-    let val = e.detail.value;
-    let cityIndex = val[0];
-    let { cityData, region } = me.data;
-
-    Promise(wx.request, {
-      url: API + '&keywords=' + cityData[cityIndex].name,
-      method: 'GET'
-    })
-      .then(res => {
-        if (+res.statusCode === 200) {
-          region[1] = cityIndex
-          region[2] = 0
-          me.setData({
-            districtData: res.data.districts[0].districts,
-            region: region
-          });
-        }
-        else {
-          me.setData({
-            districtData: []
-          });
-        }
-      })
-      .catch(err => {
-        me.setData({
-          districtData: []
-        });
-      });
-  },
-  bindDistChange:function(e){
-    let me = this;
-    let val = e.detail.value;
-    let cityIndex = val[0];
-    let { region } = me.data;
-    region[2] = cityIndex
-    me.setData({
-      region: region
-    });
   },
   /**
    * 提交
    */
   formSubmit: function (e) {
-    if (this.WxValidate.checkForm(e)) {
+    const params = e.detail.value
+    params.address_province = this.data.region[0]
+    params.address_city = this.data.region[1]
+    params.address_district = this.data.region[2]
+
+    console.log(params)
+    if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]
       wx.showModal({
         title: '友情提示',
@@ -237,9 +131,46 @@ Page({
       })
       return false
     } else {
-      wx.redirectTo({
-        url: '../information/company/info',
-      })
+      
+      if (this.data.hasData){
+        //更新
+        this.loanPerson.updateAsync({ id: this.data._id }, params)
+          .then(data => {
+            console.log(data)
+            if (data.meta.code == 0) {
+              wx.showToast({
+                title: data.meta.message,
+                icon: 'success',
+                duration: 1500,
+                success: function () {
+                  wx.redirectTo({
+                    url: '../information/company/info',
+                  })
+                }
+              })
+            }
+          })
+      }else{
+        //新增
+        params.create_user = this.data.userId
+        this.loanPerson.saveAsync(params)
+          .then(data => {
+            console.log(data)
+            if (data.meta.code == 0) {
+              wx.showToast({
+                title: data.meta.message,
+                icon: 'success',
+                duration: 1500, 
+                success:function(){
+                  wx.redirectTo({
+                    url: '../information/company/info',
+                  })
+                }
+              })
+            }
+          })
+
+      }
     }
     
   },

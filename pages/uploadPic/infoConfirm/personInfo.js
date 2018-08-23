@@ -1,4 +1,6 @@
 // pages/uploadPic/infoConfirm/personInfo.js
+var App = getApp()
+
 Page({
 
   /**
@@ -6,9 +8,9 @@ Page({
    */
   data: {
     name:'',
-    idCard:'',
-    companyName:'',
-    socialId:''
+    id_card:'',
+    company_name:'',
+    social_code:''
   },
 
   /**
@@ -16,18 +18,84 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
-    let {name ,idCard,companyName,socialId} = that.data;
-    idCard = wx.getStorageSync('card_id')
+    that.WxValidate = App.WxValidate({
+      social_code: {
+        required: true,
+        number: true,
+      },
+      name: {
+        required: true,
+      },
+      company_name: {
+        required: true,
+      },
+      id_card: {
+        required: true
+      }
+    }, {
+        social_code: {
+          required: '请输入统一社会信用代码',
+        },
+        name: {
+          required: '请输入名字',
+        },
+        company_name: {
+          required: '请输入公司名字'
+        },
+        id_card: {
+          required: '请输入身份证号码'
+        }
+      })
+    
+    that.loanPerson = App.HttpResource('/loanPerson/:id', { id: '@id' })
+    that.initData();
+  },
+
+  initData: function(){
+    let that = this;
+    let { name, id_card, company_name, social_code } = that.data;
+    id_card = wx.getStorageSync('card_id')
     name = wx.getStorageSync('name')
-    companyName = wx.getStorageSync('address')
-    socialId = wx.getStorageSync("gender")
+    company_name = wx.getStorageSync('address')
+    social_code = wx.getStorageSync("gender")
     that.setData({
       name: name,
-      idCard: idCard,
-      companyName: companyName,
-      socialId: socialId
+      id_card: id_card,
+      company_name: company_name,
+      social_code: social_code,
+      _id: wx.getStorageSync('loanPersonId'),
     })
   },
 
+  formSubmit: function(e){
+    const params = e.detail.value
+    console.log(params)
+    if (!this.WxValidate.checkForm(e)) {
+      const error = this.WxValidate.errorList[0]
+      wx.showModal({
+        title: '友情提示',
+        content: `${error.msg}`,
+        showCancel: !1,
+      })
+      return false
+    } else {
+      this.loanPerson.updateAsync({ id: this.data._id }, params)
+        .then(data => {
+          if (data.meta.code == 0) {
+            wx.showToast({
+              title: data.meta.message,
+              icon: 'success',
+              duration: 1500,
+              success: function () {
+                wx.navigateTo({
+                  url: '../../about/index',
+                })
+              }
+            })
+          }
+        })
+    }
+    
+  }
   
 })

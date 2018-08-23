@@ -24,8 +24,13 @@
         <input name="name" value="{{name}}" class="input" maxlength="100" placeholder="请输入名称" />
       </view>
       <view class='view-form-cell'>
+        <text class='form-key'>垫付金额</text>
+        <input name="spot_amount" class="input" value='{{spot_amount}}' type="number" maxlength="100" />
+        <text class='form-key'>万元</text>
+      </view>
+      <view class='view-form-cell'>
         <text class='form-key'>企业年销售额</text>
-        <input bindinput="bindEmptyInput" name="sellAmount" class="input" type="number" maxlength="100" />
+        <input name="sell_amount" class="input" value='{{sell_amount}}' type="number" maxlength="100" />
         <text class='form-key'>万元</text>
       </view>
       <view class='view-form-cell'>
@@ -33,9 +38,9 @@
         <view class='fa fa-plus-circle' bindtap='bindProductAdd'></view>
       </view>
       <view class='view-form-cell' wx:for='{{products}}' wx:key="*this"  wx:for-item="product">
-        <input bindinput="bindEmptyInput" name='product' class="input left" placeholder="产品名称" value='{{product.name}}'/>
+        <input name='product' id='name_{{index}}_product' bindinput='productChange' class="input left" placeholder="产品名称" value='{{product.name}}'/>
         <text class='form-key'>占比</text>
-        <input name='percent' class='input percnet' type="number" value='{{product.percent}}'></input>
+        <input name='percent' id='percent_{{index}}_product' bindinput='productChange' class='input percnet' type="number" value='{{product.percent}}'></input>
         <text class='form-key'>%</text>
       </view>
       <view class='view-form-cell form-address'>
@@ -47,7 +52,7 @@
         </view>
       </view>
       <view class='view-form-cell form-address-detail'>
-        <input bindinput='bindKeyInput' maxlength='200' name='addressDetail' placeholder="详细地址"></input>
+        <input  maxlength='200' name='address_detail' value='{{address_detail}}' placeholder="详细地址"></input>
       </view>
       <view class='view-form-cell'>
         <text class='form-key'>
@@ -55,22 +60,10 @@
         </text>
         
       </view>
-      <view class='view-form-cell'>
-        <input bindinput="bindPhoneInput" name='sellCompanyName1' class="input left" placeholder="与开票信息一致的企业全称" />
+      <view class='view-form-cell' wx:for='{{sales_customer}}' wx:key="unique"  wx:for-item="customer">
+        <input name='sellCompanyName' id='name_{{index}}_sell' bindinput='customerChange' class="input left" placeholder="与开票信息一致的企业全称" value='{{customer.name}}'/>
         <text class='form-key'>账期</text>
-        <input name='sellDueDate1' class='input percnet' type="number"></input>
-        <text class='form-key'>月</text>
-      </view>
-      <view class='view-form-cell'>
-        <input bindinput="bindPhoneInput" name='sellCompanyName2' class="input left" placeholder="与开票信息一致的企业全称" />
-        <text class='form-key'>账期</text>
-        <input name='sellDueDate2' class='input percnet' type="number"></input>
-        <text class='form-key'>月</text>
-      </view>
-      <view class='view-form-cell'>
-        <input bindinput="bindPhoneInput" name='sellCompanyName3' class="input left" placeholder="与开票信息一致的企业全称" />
-        <text class='form-key'>账期</text>
-        <input name='sellDueDate3' class='input percnet' type="number"></input>
+        <input name='sellDueDate' id='dueDate_{{index}}_sell' bindinput='customerChange' class='input percnet' type="number" value='{{customer.dueDate}}'></input>
         <text class='form-key'>月</text>
       </view>
       <view class='form-btn-area'>

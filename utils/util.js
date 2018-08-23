@@ -1,4 +1,5 @@
 import _Promise from 'bluebird';
+import config from './config.js'
 
 const formatTime = date => {
   const year = date.getFullYear()
@@ -41,8 +42,32 @@ function Promise(fn, options) {
     });
 }
 
+/**
+ * 上传文件
+ */
+function uploadFile(filePath,formData){
+  return new _Promise((resolve, reject) => {
+    wx.uploadFile({
+      url: config.basePath + '/upload/file',
+      filePath: filePath,
+      name: 'file',
+      formData: formData,
+      success: function (res) {
+        resolve(res.data)
+      },
+      fail: function(){
+        reject({
+          code: 3,
+          reason: '文件上传失败'
+        })
+      }
+    })
+  });
+}
+
 module.exports = {
   formatTime: formatTime,
   trim:trim,
   Promise: Promise,
+  uploadFile: uploadFile,
 }

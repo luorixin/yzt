@@ -137,14 +137,14 @@ Page({
         //更新
         this.loanPerson.updateAsync({ id: this.data._id }, params)
           .then(data => {
-            console.log(data)
+            console.log("更新"+data)
             if (data.meta.code == 0) {
               wx.showToast({
                 title: data.meta.message,
                 icon: 'success',
                 duration: 1500,
                 success: function () {
-                  wx.redirectTo({
+                  wx.navigateTo({
                     url: '../information/company/info',
                   })
                 }
@@ -164,7 +164,7 @@ Page({
                 icon: 'success',
                 duration: 1500, 
                 success:function(){
-                  wx.redirectTo({
+                  wx.navigateTo({
                     url: '../information/company/info',
                   })
                 }

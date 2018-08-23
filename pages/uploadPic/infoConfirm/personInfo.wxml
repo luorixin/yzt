@@ -22,19 +22,19 @@
       <view class='view-form-label'>请核对以下信息是否正确</view>
       <view class='view-form-cell'>
         <text class='form-key'>申请人姓名</text>
-        <input bindinput="bindEmptyInput" name="name" value='{{name}}' maxlength="100" placeholder="请输入名称" />
+        <input name="name" value='{{name}}' maxlength="100" placeholder="请输入名称" />
       </view>
       <view class='view-form-cell'>
         <text class='form-key'>申请人身份证号</text>
-        <input bindinput="bindEmptyInput" name="idCard" value='{{idCard}}' type='number' placeholder="请输入身份证号码" />
+        <input name="id_card" value='{{id_card}}' type='number' placeholder="请输入身份证号码" />
       </view>
       <view class='view-form-cell'>
         <text class='form-key'>企业名称</text>
-        <input bindinput="bindEmptyInput" name="companyName" value='{{companyName}}' placeholder="请输入企业名称" />
+        <input name="company_name" value='{{company_name}}' placeholder="请输入企业名称" />
       </view>
       <view class='view-form-cell'>
         <text class='form-key'>统一社会信用代码</text>
-        <input bindinput="bindEmptyInput" name="socialId" value='{{socialId}}' type='number' placeholder="请输入统一社会信用代码" />
+        <input name="social_code" value='{{social_code}}' type='number' placeholder="请输入统一社会信用代码" />
       </view>
       <view class='form-btn-area'>
         <button class='form-btn' type='primary' formType='submit'>下一步</button>

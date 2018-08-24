@@ -1,4 +1,5 @@
 // pages/uploadPic/infoConfirm/personInfo.js
+
 var App = getApp()
 
 Page({
@@ -54,10 +55,11 @@ Page({
   initData: function(){
     let that = this;
     let { name, id_card, company_name, social_code } = that.data;
-    id_card = wx.getStorageSync('card_id')
-    name = wx.getStorageSync('name')
-    company_name = wx.getStorageSync('address')
-    social_code = wx.getStorageSync("gender")
+    let data = wx.getStorageSync('personInfo');
+    id_card = data.card_id
+    name = data.name
+    company_name = data.company_name
+    social_code = data.social_code
     that.setData({
       name: name,
       id_card: id_card,

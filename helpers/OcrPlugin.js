@@ -33,7 +33,7 @@ let request = (opts, callback) => {
       },
       method: 'POST',
       success: function (res) {
-        let formatRes = _formatResult['_formatResult_' + opts.api_type](res)
+        let formatRes = formatResult['formatResult_' + opts.api_type](res)
         if (formatRes) {
           if (callback.success)
             callback.success(formatRes)
@@ -88,13 +88,13 @@ let _getToken = ()=>{
   })
 }
 
-let _formatResult = {
-  _formatResult_basic: function(res){
+let formatResult = {
+  formatResult_basic: function(res){
     return ''
   },
-  _formatResult_idcard: function(res){
+  formatResult_idcard: function(res){
     let format = {}
-    if (res.statusCode == 200) {
+    if (res.data.words_result_num) {
       if (res.data.words_result_num > 0) {
         let result = res.data.words_result;
         if (result['失效日期']) {
@@ -124,6 +124,27 @@ let _formatResult = {
         if (result['民族']) {
           format['nation'] = result['民族'].words
         }
+        if (result['社会信用代码']) {
+          format['social_code'] = result['社会信用代码'].words
+        }
+        if (result['单位名称']) {
+          format['company_name'] = result['单位名称'].words
+        }
+        if (result['法人']) {
+          format['corporation'] = result['法人'].words
+        }
+        if (result['证件编号']) {
+          format['id_number'] = result['证件编号'].words
+        }
+        if (result['成立日期']) {
+          format['company_createdate'] = result['成立日期'].words
+        }
+        if (result['地址']) {
+          format['company_address'] = result['地址'].words
+        }
+        if (result['有效期']) {
+          format['company_duedate'] = result['有效期'].words
+        }
         return format;
       } else {
         return ''
@@ -135,5 +156,6 @@ let _formatResult = {
 }
 
 module.exports = {
-  request: request
+  request: request,
+  formatResult: formatResult
 }

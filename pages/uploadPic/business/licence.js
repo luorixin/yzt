@@ -1,4 +1,5 @@
 // pages/uploadPic/business/licence.js
+import OcrPlugin from '../../../helpers/OcrPlugin.js'
 import util from '../../../utils/util.js'
 import config from '../../../utils/config.js'
 
@@ -113,21 +114,56 @@ Page({
   formSubmit: function (e) {
     let that = this;
     console.log(that.data)
-    if (that.data.licence_img != '../../../src/image/licence.png') {
+    if (that.data.business_licence != '../../../src/image/licence.png') {
       //上传
       if (that.data.showLicence){
         //上传营业执照
         //如果之前已经上传过的，且本次没有重新选择，则跳过上传过程
         if (!that.data.hasChooseLicence) {
-          that.setData({
-            showLicence: false
+          util.ocrAnalysis('licence', {
+            image: 'public' + that.data.business_licence.split(config.fileBasePath)[1],
+          }).then(function (res) {
+            if (res.meta.code == 0) {
+              console.log(res.data)
+              let formatRes = OcrPlugin.formatResult['formatResult_idcard'](res)
+              if (formatRes) {
+                let personInfo = wx.getStorageSync('personInfo') ? wx.getStorageSync('personInfo') : {};
+                Object.assign(personInfo, formatRes);
+                wx.setStorageSync('personInfo', personInfo)
+              }
+              that.setData({
+                showLicence: false
+              })
+            }
+          })
+          .catch(function (res) {
+            console.log(res)
+            wx.showModal({
+              title: '友情提示',
+              content: '解析发生错误，请重新上传',
+              showCancel: false
+            })
           })
         } else {
           that.loanCompanyUpload(that.data.business_licence, 'business_licence',function(res){
-            console.log(res)
-            that.setData({
-              business_licence: that.data.business_licence,
-              showLicence: false
+            res = JSON.parse(res)
+            util.ocrAnalysis('licence', {
+              image: res.data.image,
+            }).then(function (res) {
+              console.log(res)
+              if (res.meta.code == 0) {
+                console.log(res.data)
+                let formatRes = OcrPlugin.formatResult['formatResult_idcard'](res)
+                if (formatRes) {
+                  let personInfo = wx.getStorageSync('personInfo') ? wx.getStorageSync('personInfo') : {};
+                  Object.assign(personInfo, formatRes);
+                  wx.setStorageSync('personInfo', personInfo)
+                }
+                that.setData({
+                  business_licence: that.data.business_licence,
+                  showLicence: false
+                })
+              }
             })
           });
         }

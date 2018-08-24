@@ -1,5 +1,6 @@
 // pages/uploadPic/idCard.js
 import ImgToBasePlugin from '../../helpers/ImgToBasePlugin.js'
+import OcrPlugin from '../../helpers/OcrPlugin.js'
 import util from '../../utils/util.js'
 import config from '../../utils/config.js'
 
@@ -92,63 +93,131 @@ Page({
     if (!that.data.changeToFace) {
       //背面选择完成
       if (that.data.idcard_back != '../../src/image/idcard_back.png'){
-        //解析背面
-        new ImgToBasePlugin(that.data.idcard_back, canvasID, 'back', 'idcard')
-          .on('DecodeComplete', (res) => {
+        // 解析背面(微信小程序内部利用canvas进行解析)
+        // new ImgToBasePlugin(that.data.idcard_back, canvasID, 'back', 'idcard')
+        //   .on('DecodeComplete', (res) => {
+        //     console.log(res)
+        //     if (res.code == 0) {
+        //       console.log(res.data)
+        //       let formatRes = res.data;
+        //       wx.setStorageSync('personInfo', {
+        //         'end_date': formatRes.end_date,
+        //         'start_data': formatRes.start_data,
+        //         'partement': formatRes.partement,
+        //       })
+        //       //如果之前已经上传过的，且本次没有重新选择，则跳过上传过程
+        //       if (!that.data.hasChooseBack) {
+        //         that.setData({
+        //           idcard_img: that.data.idcard_face,
+        //           changeToFace: true
+        //         })
+        //       }else{
+        //         //上传
+        //         let formData = {
+        //           model: 'loanPerson',
+        //           model_id: wx.getStorageSync('loanPersonId'),
+        //           model_name: 'id_card_pic_back'
+        //         }
+        //         console.log(that.data.idcard_back, formData)
+        //         util.uploadFile(that.data.idcard_back, formData)
+        //         .then(function(res){
+        //           console.log(res)
+        //           that.setData({
+        //             idcard_img: that.data.idcard_face,
+        //             changeToFace: true
+        //           })
+        //         })
+        //         .catch(function(res){
+        //           wx.showModal({
+        //             title: '友情提示',
+        //             content: '上传发生错误，请重新上传',
+        //             showCancel: false
+        //           })
+        //         })
+        //       }
+        //     } else {
+        //       wx.showModal({
+        //         title: '友情提示',
+        //         content: '解析发生错误，请重新上传',
+        //         showCancel: false
+        //       })
+        //     }
+        //   })
+
+        //如果之前已经上传过的，且本次没有重新选择，则跳过上传过程(调用远程api进行解析)
+        if (!that.data.hasChooseBack) {
+          util.ocrAnalysis('idcard', {
+            image: 'public'+that.data.idcard_back.split(config.fileBasePath)[1],
+            id_card_side: 'back',
+          }).then(function(res){
             console.log(res)
-            if (res.code == 0) {
-              console.log(res.data)
-              wx.setStorage({
-                key: 'end_date',
-                data: res.data.end_date
+            if (res.meta.code == 0) {
+              let formatRes = OcrPlugin.formatResult['formatResult_idcard'](res)
+              console.log(formatRes)
+              if (formatRes) {
+                wx.setStorageSync('personInfo', {
+                  'end_date': formatRes.end_date,
+                  'start_data': formatRes.start_data,
+                  'partement': formatRes.partement,
+                })
+              }
+              that.setData({
+                idcard_img: that.data.idcard_face,
+                changeToFace: true
               })
-              wx.setStorage({
-                key: 'start_data',
-                data: res.data.start_data
+            }
+          })
+          .catch(function(res){
+            console.log(res)
+            wx.showModal({
+              title: '友情提示',
+              content: '解析发生错误，请重新上传',
+              showCancel: false
+            })
+          })
+        } else {
+          //上传
+          let formData = {
+            model: 'loanPerson',
+            model_id: wx.getStorageSync('loanPersonId'),
+            model_name: 'id_card_pic_back'
+          }
+          console.log(that.data.idcard_back, formData)
+          util.uploadFile(that.data.idcard_back, formData)
+            .then(function (res) {
+              res = JSON.parse(res)
+              console.log(res)
+              //解析图片
+              return util.ocrAnalysis('idcard', {
+                image: res.data.image,
+                id_card_side:'back',
               })
-              wx.setStorage({
-                key: 'partement',
-                data: res.data.partement
-              })
-              //如果之前已经上传过的，且本次没有重新选择，则跳过上传过程
-              if (!that.data.hasChooseBack) {
+            })
+            .then(function(res){
+              if (res.meta.code == 0) {
+                console.log(res.data)
+                let formatRes = OcrPlugin.formatResult['formatResult_idcard'](res)
+                if (formatRes) {
+                  wx.setStorageSync('personInfo', {
+                    'end_date': formatRes.end_date,
+                    'start_data': formatRes.start_data,
+                    'partement': formatRes.partement,
+                  })
+                }
                 that.setData({
                   idcard_img: that.data.idcard_face,
                   changeToFace: true
                 })
-              }else{
-                //上传
-                let formData = {
-                  model: 'loanPerson',
-                  model_id: wx.getStorageSync('loanPersonId'),
-                  model_name: 'id_card_pic_back'
-                }
-                console.log(that.data.idcard_back, formData)
-                util.uploadFile(that.data.idcard_back, formData)
-                .then(function(res){
-                  console.log(res)
-                  that.setData({
-                    idcard_img: that.data.idcard_face,
-                    changeToFace: true
-                  })
-                })
-                .catch(function(res){
-                  wx.showModal({
-                    title: '友情提示',
-                    content: '上传发生错误，请重新上传',
-                    showCancel: false
-                  })
-                })
               }
-            } else {
+            })
+            .catch(function (res) {
               wx.showModal({
                 title: '友情提示',
-                content: '解析发生错误，请重新上传',
+                content: '上传或者解析发生错误，请重新上传',
                 showCancel: false
               })
-            }
-          })
-        
+            })
+        }
       }else{
         wx.showModal({
           title: '友情提示',
@@ -159,70 +228,131 @@ Page({
     }else{
       //上传
       //解析正面
-      new ImgToBasePlugin(that.data.idcard_face, canvasID, 'front', 'idcard')
-        .on('DecodeComplete', (res) => {
-          if (res.code == 0) {
-            console.log(res.data)
-            wx.setStorage({
-              key: 'address',
-              data: res.data.address
-            })
-            wx.setStorage({
-              key: 'card_id',
-              data: res.data.card_id
-            })
-            wx.setStorage({
-              key: 'birth',
-              data: res.data.birth
-            })
-            wx.setStorage({
-              key: 'name',
-              data: res.data.name
-            })
-            wx.setStorage({
-              key: 'gender',
-              data: res.data.gender
-            })
-            wx.setStorage({
-              key: 'nation',
-              data: res.data.nation
-            })
-            //如果之前已经上传过的，且本次没有重新选择，则跳过上传过程
-            if (!that.data.hasChooseFace) {
-              wx.navigateTo({
-                url: '../uploadPic/business/licence',
-              })
-            }else{
-              //上传
-              let formData = {
-                model: 'loanPerson',
-                model_id: wx.getStorageSync('loanPersonId'),
-                model_name: 'id_card_pic_front'
-              }
-              util.uploadFile(that.data.idcard_face, formData)
-                .then(function (res) {
-                  console.log(res)
-                  wx.navigateTo({
-                    url: '../uploadPic/business/licence',
-                  })
-                })
-                .catch(function (res) {
-                  wx.showModal({
-                    title: '友情提示',
-                    content: '上传发生错误，请重新上传',
-                    showCancel: false
-                  })
-                })
-            }
+      // new ImgToBasePlugin(that.data.idcard_face, canvasID, 'front', 'idcard')
+      //   .on('DecodeComplete', (res) => {
+      //     if (res.code == 0) {
+      //       console.log(res.data)
+      //       let formatRes = res.data;
+      //       let personInfo = wx.getStorageSync('personInfo') ? wx.getStorageSync('personInfo') : {};
+      //       personInfo.address = formatRes.address;
+      //       personInfo.card_id = formatRes.card_id;
+      //       personInfo.birth = formatRes.birth;
+      //       personInfo.name = formatRes.name;
+      //       personInfo.gender = formatRes.gender;
+      //       personInfo.nation = formatRes.nation;
+      //       wx.setStorageSync('personInfo', personInfo)
+      //       //如果之前已经上传过的，且本次没有重新选择，则跳过上传过程
+      //       if (!that.data.hasChooseFace) {
+      //         wx.navigateTo({
+      //           url: '../uploadPic/business/licence',
+      //         })
+      //       }else{
+      //         //上传
+      //         let formData = {
+      //           model: 'loanPerson',
+      //           model_id: wx.getStorageSync('loanPersonId'),
+      //           model_name: 'id_card_pic_front'
+      //         }
+      //         util.uploadFile(that.data.idcard_face, formData)
+      //           .then(function (res) {
+      //             console.log(res)
+      //             wx.navigateTo({
+      //               url: '../uploadPic/business/licence',
+      //             })
+      //           })
+      //           .catch(function (res) {
+      //             wx.showModal({
+      //               title: '友情提示',
+      //               content: '上传发生错误，请重新上传',
+      //               showCancel: false
+      //             })
+      //           })
+      //       }
             
-          } else {
-            wx.showModal({
-              title: '友情提示',
-              content: '解析发生错误，请重新上传',
-              showCancel: false
+      //     } else {
+      //       wx.showModal({
+      //         title: '友情提示',
+      //         content: '解析发生错误，请重新上传',
+      //         showCancel: false
+      //       })
+      //     }
+      //   })
+    
+      //如果之前已经上传过的，且本次没有重新选择，则跳过上传过程(调用远程api进行解析)
+      if (!that.data.hasChooseFace) {
+        util.ocrAnalysis('idcard', {
+          image: 'public' + that.data.idcard_face.split(config.fileBasePath)[1],
+          id_card_side: 'front',
+        }).then(function (res) {
+          if (res.meta.code == 0) {
+            console.log(res.data)
+            let formatRes = OcrPlugin.formatResult['formatResult_idcard'](res)
+            if (formatRes) {
+              let personInfo = wx.getStorageSync('personInfo') ? wx.getStorageSync('personInfo') : {};
+              personInfo.address = formatRes.address;
+              personInfo.card_id = formatRes.card_id;
+              personInfo.birth = formatRes.birth;
+              personInfo.name = formatRes.name;
+              personInfo.gender = formatRes.gender;
+              personInfo.nation = formatRes.nation;
+              wx.setStorageSync('personInfo', personInfo)
+            }
+            wx.navigateTo({
+              url: '../uploadPic/business/licence',
             })
           }
         })
+        .catch(function () {
+          wx.showModal({
+            title: '友情提示',
+            content: '解析发生错误，请重新上传',
+            showCancel: false
+          })
+        })
+      } else {
+        //上传
+        let formData = {
+          model: 'loanPerson',
+          model_id: wx.getStorageSync('loanPersonId'),
+          model_name: 'id_card_pic_front'
+        }
+        util.uploadFile(that.data.idcard_face, formData)
+          .then(function (res) {
+            res = JSON.parse(res)
+            console.log(res)
+            //解析图片
+            return util.ocrAnalysis('idcard', {
+              image: res.data.image,
+              id_card_side: 'front',
+            })
+          })
+          .then(function (res) {
+            if (res.meta.code == 0) {
+              console.log(res.data)
+              let formatRes = OcrPlugin.formatResult['formatResult_idcard'](res)
+              if (formatRes) {
+                let personInfo = wx.getStorageSync('personInfo') ? wx.getStorageSync('personInfo') : {};
+                personInfo.address = formatRes.address;
+                personInfo.card_id = formatRes.card_id;
+                personInfo.birth = formatRes.birth;
+                personInfo.name = formatRes.name;
+                personInfo.gender = formatRes.gender;
+                personInfo.nation = formatRes.nation;
+                wx.setStorageSync('personInfo', personInfo)
+              }
+              wx.navigateTo({
+                url: '../uploadPic/business/licence',
+              })
+            }
+          })
+          .catch(function (res) {
+            wx.showModal({
+              title: '友情提示',
+              content: '上传或者解析发生错误，请重新上传',
+              showCancel: false
+            })
+          })
+      }
     }
   },
   

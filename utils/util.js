@@ -65,9 +65,35 @@ function uploadFile(filePath,formData){
   });
 }
 
+/**
+ * ocr解析
+ */
+function ocrAnalysis(type,data){
+  return new _Promise((resolve, reject) => {
+    wx.request({
+      url: config.basePath + '/ocr/' + type,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' 
+      },
+      method:'POST',
+      data:data,
+      success: function (res) {
+        resolve(res.data)
+      },
+      fail: function () {
+        reject({
+          code: 3,
+          reason: 'ocr接口调用失败'
+        })
+      }
+    })
+  });
+}
+
 module.exports = {
   formatTime: formatTime,
   trim:trim,
   Promise: Promise,
   uploadFile: uploadFile,
+  ocrAnalysis: ocrAnalysis,
 }

@@ -52,6 +52,9 @@ function uploadFile(filePath,formData){
       filePath: filePath,
       name: 'file',
       formData: formData,
+      header:{
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
       success: function (res) {
         resolve(res.data)
       },
@@ -73,7 +76,8 @@ function ocrAnalysis(type,data){
     wx.request({
       url: config.basePath + '/ocr/' + type,
       header: {
-        'content-type': 'application/x-www-form-urlencoded' 
+        'content-type': 'application/x-www-form-urlencoded' ,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       method:'POST',
       data:data,

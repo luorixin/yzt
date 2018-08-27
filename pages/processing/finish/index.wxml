@@ -1,0 +1,29 @@
+<!--pages/processing/finish/index.wxml-->
+<!--pages/processing/index.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='continue' bindtap='next'>继续</view>
+<view class='info-container'>
+  <icon type='waiting' size='100' color='red'></icon>
+  <text>贷款审批中</text>
+  <view class='info-detail'>
+    <view class='info-detail-title'>
+      <label class='fa fa-question-circle-o'></label>
+      <text>常见问题：</text>
+    </view>
+    <view class='info-detail-content'>
+      <view class='info-detail-step'>
+        1、多少时间才会有审批结果
+      </view>
+      <text>
+        一般税控插件安装完成后的1-3个工作日內会有反馈，若没有收到反馈结果，请联系我司工作人员400888888
+      </text>
+      <view class='info-detail-step'>
+        2、哪些情况下贷款会被拒绝
+      </view>
+      <text>
+        申请人征信有不良记录、申请人有司法负面、相关企业有司法负面、企业经营状况不良好等情况下都可能会造成审批不通过。
+      </text>
+    </view>
+  </view>
+</view>
+

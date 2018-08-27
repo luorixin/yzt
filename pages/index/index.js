@@ -16,7 +16,7 @@ Page({
     })
   },
   changeToLogin:function(){
-    wx.getStorageSync('token') ? this.goIndex() : this.goLogin()
+    wx.getStorageSync('token')!='' ? this.goIndex() : this.goLogin()
   },
   goLogin:function(){
     wx.navigateTo({
@@ -24,8 +24,11 @@ Page({
     })
   },
   goIndex:function(){
-    wx.navigateTo({
-      url: '../information/info',
+    // wx.navigateTo({
+    //   url: '../information/info',
+    // })
+    wx.redirectTo({
+      url: '../about/index',
     })
   },
   onLoad: function () {

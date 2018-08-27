@@ -1,0 +1,22 @@
+<!--pages/result/index.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='continue' bindtap='next'>继续</view>
+<view class='view-progress-mini'>
+  <view class='view-progress-mini-inner'>
+    <view class='view-progress-mini-inner-step active'>
+      <label>初审通过</label>
+    </view>
+    <view class='view-progress-mini-inner-step'>
+      <label>复核</label>
+    </view>
+    <view class='view-progress-mini-inner-step'>
+      <label>放款</label>
+    </view>
+  </view>
+</view>
+<view class='info-container'>
+  <icon type='waiting' size='100' color='red'></icon>
+  <text>贷款复核中</text>
+  <text class='info-tip'>请耐心等待，在1-3个工作日内会收到反馈结果</text>
+  
+</view>

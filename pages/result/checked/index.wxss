@@ -1,0 +1,65 @@
+/* pages/result/checked/index.wxss */
+page{
+  position: relative;
+}
+.continue{
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #DF8588;
+  font-size: 30rpx;
+  width: 120rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.info-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 60rpx auto;
+}
+.info-container icon{
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+.info-container text{
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 40rpx;
+}
+.info-container .info-decimal{
+  font-size: 72rpx;
+  color: #DF8588;
+  margin: 40rpx auto;
+  text-align: center;
+  font-weight: bold;
+}
+.info-container .info-tip{
+  color: #999;
+}
+.info-container .info-detail{
+  margin:60rpx auto;
+  text-align: left;
+  font-size: 24rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  width: 100%;
+}
+.info-detail .info-detail-title text{
+  font-size: 28rpx;
+  font-weight: bold;
+  line-height: 40rpx;
+  height: 40rpx;
+}
+.info-detail .info-detail-title .fa{
+  font-size: 40rpx;
+  color: #DF8588;
+  margin-right: 10rpx;
+}
+.info-detail .info-detail-content text{
+  margin-top: 20rpx;
+  display: block;
+  text-align: left;
+}

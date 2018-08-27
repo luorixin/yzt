@@ -104,7 +104,7 @@ Page({
    */
   switchStock: function(e){
     this.setData({
-      stockPercent:e.detail.value==='checked' ? 1 : 0
+      stockPercent:e.detail.value==='checked' ? true : false
     })
   },
   bindRegionChange: function (e) {

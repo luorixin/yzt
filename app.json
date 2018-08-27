@@ -8,7 +8,15 @@
     "pages/uploadPic/idCard",
     "pages/uploadPic/business/licence",
     "pages/uploadPic/infoConfirm/personInfo",
-    "pages/about/index"
+    "pages/about/index",
+    "pages/makeplugin/index",
+    "pages/firstTrial/index",
+    "pages/reexamine/index",
+    "pages/processing/index",
+    "pages/processing/finish/index",
+    "pages/result/index",
+    "pages/result/checked/index",
+    "pages/result/payed/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

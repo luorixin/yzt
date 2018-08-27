@@ -1,0 +1,30 @@
+<!--pages/result/payed/index.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='view-progress-mini'>
+  <view class='view-progress-mini-inner'>
+    <view class='view-progress-mini-inner-step active'>
+      <label>初审通过</label>
+    </view>
+    <view class='view-progress-mini-inner-step active'>
+      <label>复核</label>
+    </view>
+    <view class='view-progress-mini-inner-step active'>
+      <label>放款</label>
+    </view>
+  </view>
+</view>
+<view class='info-container'>
+  <icon type='success' size='100' color='red'></icon>
+  <text>放款成功</text>
+  <text class='info-tip'>已成功放款，提醒厂商查看账户资金变化</text>
+  <view class='info-detail'>
+    <view class='info-detail-title'>
+      <label class='fa fa-list-ul'></label>
+      <text>放款明细：</text>
+    </view>
+    <view class='info-detail-content'>
+      <text>账号12344******3344，10万元（20%）放款成功！</text>
+      <text>账号66724******3344，40万元（80%）放款成功！</text>
+    </view>
+  </view>
+</view>

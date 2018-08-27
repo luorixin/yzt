@@ -1,0 +1,19 @@
+<!--pages/processing/index.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='continue' bindtap='next'>继续</view>
+<view class='info-container'>
+  <icon type='waiting' size='100' color='red'></icon>
+  <text>检测到您未安装或未安装完成税控插件</text>
+  <text>请及时安装税控插件，否则贷款将不会被审批</text>
+  <view class='info-detail'>
+    <view class='info-detail-title'>
+      <label class='fa fa-question-circle-o'></label>
+      <text>如何安装税控插件</text>
+    </view>
+    <view class='info-detail-content'>
+      <text>1、安装电脑必须为企业税控机电脑，税控插件下载链接：</text>
+      <text>https://sme.pingan.com.cn/web/cpp/update_cjb/app_exe/cjb_setup.exe</text>
+      <text>2、详细的安装说明请下载 税控插件安装说明</text>
+    </view>
+  </view>
+</view>

@@ -1,4 +1,4 @@
-// pages/about/index.js
+// pages/processing/index.js
 Page({
 
   /**
@@ -15,16 +15,9 @@ Page({
   
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
   next: function(){
     wx.navigateTo({
-      url: '../makeplugin/index',
+      url: '../processing/finish/index',
     })
   }
 })

@@ -75,6 +75,65 @@
 .view-progress-inner-step.active ~ .view-progress-inner-step.active::after {
   background-color: #F4C966;
 }
+/*流程图-2*/
+.view-progress-mini{
+  box-sizing: border-box;
+}
+.view-progress-mini .view-progress-mini-inner{
+  width: 400rpx;
+  height: 100rpx;
+  padding: 20rpx;
+  margin: auto;
+}
+.view-progress-mini .view-progress-mini-inner .view-progress-mini-inner-step{
+  width: 33.33%;
+  font-size: 24rpx;
+  float: left;
+  text-align: center;
+  position: relative;
+  color: #F4C966;
+}
+.view-progress-mini .view-progress-mini-inner .view-progress-mini-inner-step.active{
+  color: #F4C966
+}
+.view-progress-mini-inner-step::before{
+  display: block;
+  content: ''; /*设定计数器内容*/
+  width: 34rpx;
+  height: 34rpx;
+  background-color: #F4C966;
+  line-height: 34rpx;
+  border-radius: 100%;
+  font-size: 14rpx;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  margin: 0 auto 32rpx auto;
+}
+.view-progress-mini-inner-step ~ .view-progress-mini-inner-step::after{
+  content: '';
+  width: 100%;
+  height: 4rpx;
+  background-color: #F4C966;
+  position: absolute;
+  left: -50%;
+  top: 17rpx;
+  z-index: -1;
+}
+
+.view-progress-mini-inner-step.active::before{
+  font: normal normal normal 14px/1 FontAwesome;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f00c";
+  font-size: 30rpx;
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-top: -13rpx;
+  margin-bottom: 21rpx;
+}
 /*表单相关*/
 .view-form{
   background: #fff;

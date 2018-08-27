@@ -1,0 +1,48 @@
+/* pages/makeplugin/index.wxss */
+.flex-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.info-container{
+  position: relative;
+  width: 500rpx;
+  margin: 60rpx auto 0 auto;
+}
+.info-container .info-title{
+  font-size: 36rpx;
+  text-align: center;
+}
+.info-container .info-title icon{
+  float: left;
+}
+.info-container .info-title text{
+  line-height: 60rpx;
+  margin-left: 10rpx;
+}
+.info-container .info-detail{
+  font-size: 28rpx;
+  text-align: left;
+  margin: 60rpx 0 60rpx 0;
+}
+.info-container .info-btn button{
+  background: #e08488;
+  width: 288rpx;
+  height: 60rpx;
+  text-align: center;
+  font-size: 28rpx;
+  line-height: 60rpx;
+  color: #fff;
+  margin: auto;
+}
+.flex-container .flex-btn{
+  margin-top: 400rpx;
+}
+.flex-btn button{
+  font-size: 32rpx;
+  background: #fff;
+  color: #333;
+  width: 300rpx;
+  height: 80rpx;
+}

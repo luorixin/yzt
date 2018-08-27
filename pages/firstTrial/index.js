@@ -1,4 +1,4 @@
-// pages/about/index.js
+// pages/firstTrial/index.js
 Page({
 
   /**
@@ -23,8 +23,9 @@ Page({
   },
 
   next: function(){
-    wx.navigateTo({
-      url: '../makeplugin/index',
+    //检测是否装了插件，假设没通过
+    wx.redirectTo({
+      url: '../processing/index',
     })
   }
 })

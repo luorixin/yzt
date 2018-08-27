@@ -71,6 +71,7 @@ Page({
 
   formSubmit: function(e){
     const params = e.detail.value
+    params.status = 1;
     console.log(params)
     if (!this.WxValidate.checkForm(e)) {
       const error = this.WxValidate.errorList[0]

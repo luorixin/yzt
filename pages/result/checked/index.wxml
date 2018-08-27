@@ -1,0 +1,31 @@
+<!--pages/result/checked/index.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='continue' bindtap='next'>继续</view>
+<view class='view-progress-mini'>
+  <view class='view-progress-mini-inner'>
+    <view class='view-progress-mini-inner-step active'>
+      <label>初审通过</label>
+    </view>
+    <view class='view-progress-mini-inner-step active'>
+      <label>复核</label>
+    </view>
+    <view class='view-progress-mini-inner-step'>
+      <label>放款</label>
+    </view>
+  </view>
+</view>
+<view class='info-container'>
+  <text>复核通过，最终贷款额度为</text>
+  <text class='info-decimal'>50万元</text>
+  <text class='info-tip'>请耐心等待，在1-3个工作日内会收到反馈结果</text>
+  <view class='info-detail'>
+    <view class='info-detail-title'>
+      <label class='fa fa-list-ul'></label>
+      <text>放款明细：</text>
+    </view>
+    <view class='info-detail-content'>
+      <text>账号12344******3344，将放款贷款金额的20%，即10万元</text>
+      <text>账号66724******3344，将放款贷款金额的80%，即40万元</text>
+    </view>
+  </view>
+</view>

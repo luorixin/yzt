@@ -1,0 +1,27 @@
+<!--pages/firstTrial/index.wxml-->
+<!--pages/information/company/info.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='view-container'>
+  <view class='view-progress'>
+    <view class='view-progress-inner'>
+      <view class='view-progress-inner-step active'>
+        <label>填写信息</label>
+      </view>
+      <view class='view-progress-inner-step active'>
+        <label>上传资料</label>
+      </view>
+      <view class='view-progress-inner-step active'>
+        <label>身份核对</label>
+      </view>
+      <view class='view-progress-inner-step active'>
+        <label>提交审核</label>
+      </view>
+    </view>
+  </view>
+  <view class='info-container'>
+    <icon type='success' size='70' color='red'></icon>
+    <text>您的贷款申请已提交成功。我们将在1-3个工作日內给您反馈。</text>
+    <button type='default' bindtap='next'>确定</button>
+  </view>
+</view>
+

@@ -1,0 +1,21 @@
+<!--pages/makeplugin/index.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='flex-container'>
+  <view class='info-container'>
+    <view class='info-title'>
+      <icon type='warn' size='30' color='#F07074'></icon>
+      <text>请在1日内在安装税控插件</text>
+    </view>
+    <view class='info-detail'>
+      <text>
+      贷款申请提交后，请在1日內安装税控插件，以便我司提取企业发票数据。若未安装税控插件，您的贷款申请将不会被审批！
+      </text> 
+    </view>
+    <view class='info-btn'>
+      <button class='form-btn' type='warn' bindtap='info'>税控插件安装说明</button>
+    </view>
+  </view>
+  <view class='flex-btn'>
+    <button class='form-btn' type='default' bindtap='next'>我知道了</button>
+  </view>
+</view>

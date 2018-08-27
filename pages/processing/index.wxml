@@ -10,10 +10,14 @@
       <label class='fa fa-question-circle-o'></label>
       <text>如何安装税控插件</text>
     </view>
-    <view class='info-detail-content'>
-      <text>1、安装电脑必须为企业税控机电脑，税控插件下载链接：</text>
-      <text>https://sme.pingan.com.cn/web/cpp/update_cjb/app_exe/cjb_setup.exe</text>
-      <text>2、详细的安装说明请下载 税控插件安装说明</text>
+    
+     <view class='info-detail-content'>
+      <view class='info-detail-step'>
+        1、多少时间才会有审批结果1、安装电脑必须为企业税控机电脑，税控插件下载链接：https://sme.pingan.com.cn/web/cpp/update_cjb/app_exe/cjb_setup.exe
+      </view>
+      <view class='info-detail-step'>
+        2、详细的安装说明请下载 税控插件安装说明
+      </view>
     </view>
   </view>
 </view>

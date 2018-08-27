@@ -1,2 +1,57 @@
 <!--pages/reexamine/index.wxml-->
-<text>pages/reexamine/index.wxml</text>
+<view class='info-title'>医贷通申请</view>
+<view class='info-container'>
+  <view>
+    <view class='info-message'>
+    <icon type='success' size='30' color='#DF8588'></icon>
+    <text>初审通过！参考额度</text>
+    </view>
+    <view class='info-result'>50万</view>
+  </view>
+  <form bindsubmit='formSubmit' bindreset='formReset'>
+     <view class='view-form'>
+      <view class='view-form-label'>请补交复核材料</view>
+      <block wx:for="{{loanAccounts}}" wx:key="*this"  wx:for-index="idx" wx:for-item="loanAccount">
+        <view class='view-form-cell'>
+          <text class='form-key'>回款账号</text>
+          <input name="receive_account" value='{{loanAccount.receive_account}}' maxlength="100" placeholder="请填写企业的对公账号" />
+        </view>
+        <view class='view-form-cell'>
+          <text class='form-key'>还款方式</text>
+          <picker bindchange="bindTypeChange" value="{{loanAccount.type}}" name='type' range="{{types}}">
+            <view class="picker">
+              {{types[index]}}
+            </view>
+          </picker>
+        </view>
+        <view class='view-form-cell'>
+          <text class='form-key'>放款账号</text>
+          <input name="loan_account" value='{{loanAccount.loan_account}}' placeholder="请填写厂商的对公账号" />
+        </view>
+        <view class='view-form-cell'>
+          <text class='form-key'>放款比例</text>
+          <input name="loan_percent" class='input' value='{{loanAccount.loan_percent}}' type='number' />
+          <text class='form-key'>%</text>
+        </view>
+        <view class='choose-area' name='contract_pic' bindtap='chooseContract'>
+          <view class='fa fa-plus'></view>
+          <text>上传厂商签约合同</text>
+          <image mode='aspectFill' src='{{loanAccount.contract_pic}}' wx:if='{{loanAccount.contract_pic!=""}}'></image>
+        </view>
+        <view class='choose-area' name='product_certificate_pic' bindtap='chooseCert'>
+          <view class='fa fa-plus'></view>
+          <text>产品授权书</text>
+          <image mode='aspectFill' src='{{loanAccount.product_certificate_pic}}' wx:if='{{loanAccount.product_certificate_pic!=""}}'></image>
+        </view>
+      </block>
+      <view bindtap='add' class='info-add'>
+        <label class='fa fa-plus-circle'></label>
+        <text>新增放款账号</text>
+      </view>
+      <view class='form-btn-area'>
+        <button class='form-btn' type='primary' formType='submit'>下一步</button>
+      </view>
+     
+    </view>
+  </form>
+</view>

@@ -47,3 +47,11 @@ page{
   color: #DF8588;
   margin-right: 10rpx;
 }
+.info-detail .info-detail-content .info-detail-step{
+  color: #333;
+  font-size: 28rpx;
+  margin: 40rpx auto 0 auto;
+}
+.info-detail .info-detail-content text{
+  color: #333;
+}

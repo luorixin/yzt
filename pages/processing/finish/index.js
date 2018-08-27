@@ -10,7 +10,7 @@ Page({
 
   next: function(){
     wx.redirectTo({
-      url: '../../result/index',
+      url: '../../reexamine/index',
     })
   }
 })

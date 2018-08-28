@@ -16,7 +16,8 @@
     "pages/processing/finish/index",
     "pages/result/index",
     "pages/result/checked/index",
-    "pages/result/payed/index"
+    "pages/result/payed/index",
+    "pages/reexamine/auth/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,0 +1,34 @@
+<!--pages/reexamine/auth/index.wxml-->
+<view class='info-title'>医贷通申请</view>
+<view class='info-container'>
+  <view>
+    <view class='info-message'>
+    <icon type='success' size='30' color='#DF8588'></icon>
+    <text>初审通过！参考额度</text>
+    </view>
+    <view class='info-result'>50万</view>
+  </view>
+  <form bindsubmit='formSubmit' bindreset='formReset'>
+     <view class='view-form'>
+      <view class='view-form-label'>请补交复核材料</view>
+
+      <view class='view-form-message'>
+        <text>请先下载</text>
+        <button type='primary'>企业授权书模板</button>
+        <text>并加盖公章然后上传</text>
+      </view>
+     
+      <view class='choose-area' name='company_certificate_pic' bindtap='chooseImg'>
+        <view class='fa fa-plus'></view>
+        <text>企业授权书</text>
+        <image mode='aspectFill' src='{{company_certificate_pic}}' wx:if='{{company_certificate_pic!=""}}'></image>
+      </view>
+      
+
+      <view class='form-btn-area'>
+        <button class='form-btn' type='primary' formType='submit'>提交</button>
+      </view>
+     
+    </view>
+  </form>
+</view>

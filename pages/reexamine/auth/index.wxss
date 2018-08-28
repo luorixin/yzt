@@ -1,0 +1,102 @@
+/* pages/reexamine/auth/index.wxss */
+.info-container{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.info-container .info-message{
+  text-align: center;
+  margin: auto;
+  width: 400rpx;
+}
+.info-container .info-message text{
+  color: #DF8588;
+  font-size: 36rpx;
+  line-height: 80rpx;
+  height: 80rpx;
+}
+.info-container .info-message icon{
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+.info-container .info-result{
+  font-size: 96rpx;
+  color: #DF8588;
+  height: 140rpx;
+  line-height: 140rpx;
+  text-align: center;
+  width: 400rpx;
+  margin: 20rpx auto;
+}
+.info-container .info-add{
+  width: 400rpx;
+  margin: auto;
+  text-align: center;
+}
+.info-container .info-add .fa{
+  margin-right: 10rpx;
+  color: #DF8588;
+}
+.info-container .info-add text{
+  font-size: 28rpx;
+  line-height: 60rpx;
+  height: 60rpx;
+}
+
+.choose-area{
+  width: 600rpx;
+  height: 400rpx;
+  background: #cecdcd;
+  text-align: center;
+  margin: 40rpx auto;
+  position: relative;
+}
+.choose-area .fa{
+  font-size: 120rpx;
+  height: 120rpx;
+  width: 120rpx;
+  color: #fff;
+  margin: 140rpx auto 0 auto;
+  position: relative;
+  z-index:1;
+}
+.choose-area text{
+  width: 250rpx;
+  height: 40rpx;
+  font-size: 28rpx;
+  color: #8A8787;
+  display: block;
+  margin: auto;
+  position: relative;
+  z-index:1;
+}
+.choose-area image{
+  position: absolute;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.view-form-message{
+  text-align: center;
+  width: 600rpx;
+  line-height: 60rpx;
+  height: 60rpx;
+  margin: 60rpx auto;
+}
+.view-form-message text{
+  float: left;
+  font-size: 28rpx;
+  color: #A29A9A;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.view-form-message button{
+  font-size: 28rpx;
+  height: 60rpx;
+  width: 200rpx;
+  float: left;
+  margin: 0 10rpx;
+}

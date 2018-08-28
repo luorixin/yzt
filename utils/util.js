@@ -94,10 +94,59 @@ function ocrAnalysis(type,data){
   });
 }
 
+/**
+ * 批量操作
+ */
+function postMany(model,data){
+  return new _Promise((resolve, reject) => {
+    wx.request({
+      url: config.basePath + '/' + model + '/many',
+      header: {
+        // 'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      method: 'POST',
+      data: data,
+      success: function (res) {
+        resolve(res.data)
+      },
+      fail: function () {
+        reject({
+          code: 3,
+          reason: '接口调用失败'
+        })
+      }
+    })
+  });
+}
+function removeByLoanPerson(model,loanPersonId){
+  return new _Promise((resolve, reject) => {
+    wx.request({
+      url: config.basePath + '/' + model + '/loanPerson/' + loanPersonId,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      method: 'DELETE',
+      success: function (res) {
+        resolve(res.data)
+      },
+      fail: function () {
+        reject({
+          code: 3,
+          reason: '接口调用失败'
+        })
+      }
+    })
+  });
+}
+
 module.exports = {
   formatTime: formatTime,
   trim:trim,
   Promise: Promise,
   uploadFile: uploadFile,
   ocrAnalysis: ocrAnalysis,
+  postMany:postMany,
+  removeByLoanPerson: removeByLoanPerson,
 }
